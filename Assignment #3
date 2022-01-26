@@ -23,3 +23,14 @@ def myfilter(func,lists):
             
 myfilter(greater_than_5,y)
 
+#list comprehension
+
+[i*x for i in "xyz" for x in range(1,5)]
+
+[x*i for i in range(1,5) for x in "xyz"]
+
+[[x+y for x in range(4,8)] for y in range(2)]
+
+[[x+y] for x in range(2,5) for y in range(3)]
+
+[[x+y for x in range(2,6)] for y in range(4)]
