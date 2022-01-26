@@ -1,0 +1,25 @@
+#Myreduce
+def mul(x,y):
+    return x*y
+x=[1,2,3,4]
+
+def myreduce(f,lists):
+    a=x[0]
+    for i in x:
+        a = mul(a,i)
+    print(a)
+myreduce(mul,x)
+
+#myfilter
+def greater_than_5(x):
+    return x>5
+
+z= [10,1,15,2,20]
+
+def myfilter(func,lists):
+     for i in z:
+            if greater_than_5(i):
+                print(i)
+            
+myfilter(greater_than_5,y)
+
