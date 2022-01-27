@@ -1,0 +1,24 @@
+1.)
+df.iloc[[1],[1]] = 10055
+df.iloc[[3],[1]] = 10075
+
+2.)
+df['FlightNumber'] = df['FlightNumber'].astype(int)
+
+3.) 
+df_temp = pd.DataFrame(columns=['From','To'])
+df_temp[['From','To']] = df['From_To'].str.split('_',expand=True)
+df_temp.From = df_temp.From.str.capitalize()
+df_temp.To = df_temp.To.str.capitalize()
+
+4.)
+df = df.drop('From_To',1)
+df['From'] = df_temp['From'].values
+df['To'] = df_temp['To'].values
+
+5.)
+delays = pd.DataFrame(df["RecentDelays"].to_list(), columns=['delay1', 'delay2','delay3'])
+df = df.drop('RecentDelays',1)
+df['delay1'] = delays['delay1'].values
+df['delay2'] = delays['delay2'].values
+df['delay3'] = delays['delay3'].values
