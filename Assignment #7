@@ -1,0 +1,15 @@
+1.)
+import numpy as np
+x= np.array([1,2,3,4,5])
+N=5
+mat = np.column_stack([x**(N-i-1) for i in range(N)])
+
+
+2.)
+def ma(a,n=3):
+    asum= np.cumsum(a, dtype=float)
+    asum[n:] = asum[n:] - asum[:-n]
+    return asum[n-1:]/n
+a=[3, 5, 7, 2, 8, 10, 11, 65, 72, 81, 99, 100, 150]
+a1=np.array(a)
+np.array(ma(a1,n=3)).round(2)
