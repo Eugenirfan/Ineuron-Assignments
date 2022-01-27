@@ -1,0 +1,54 @@
+#areaoftriangle
+class tri:
+    def __init__(self,a,b,c):
+        self.a=a
+        self.b=b
+        self.c=c
+        
+a=float(input("Value of a: "))
+b=float(input("Value of b: "))
+c=float(input("Value of c: "))
+
+class triangle(tri):
+    def __init__(self,a,b,c):
+        super().__init__(a,b,c)
+        
+        
+    def area(self):
+        s = (a + b + c) / 2
+        return (s*(s-a)*(s-b)*(s-c)) ** 0.5 
+    
+
+getarea= triangle(a,b,c)
+getarea.area()
+
+#filter long words
+def filter_long_words():
+    words= input("Enter the words: ").split()
+    word_limit = int(input("Enter the word limit: "))
+    word_list=[]
+    for word in words:
+         if len(word)>word_limit:
+                word_list.append(word)
+    print(word_list)
+filter_long_words()
+    
+#words to number    
+def words_to_int():
+    words= input("Enter the words: ").split()
+    word_list=[]
+    for word in words:
+        word_list.append(len(word))
+    print(word_list)
+    
+words_to_int()
+
+#check vowel
+def vowel_detector():
+    letter = input("Enter the letter: ")
+    if letter in ('aeiou'):
+        return True
+    else:
+        return False
+vowel_detector()
+    
