@@ -1,0 +1,181 @@
+1.)
+import pandas as pd
+import numpy as np
+from scipy import stats
+marks  = [6,7, 5, 7, 7, 8, 7, 6, 9, 7, 4, 10, 6, 8, 8, 9, 5, 6, 4, 8]
+np.mean(marks)
+stats.mode(marks)
+np.median(marks)
+
+2.)
+service = [28, 122, 217, 130, 120, 86, 80, 90, 140, 120, 70, 40, 145, 113, 90, 68, 174, 194, 170,
+100, 75, 104, 97, 75,
+123, 100, 75, 104, 97, 75, 123, 100, 89, 120, 109]
+np.mean(service)
+stats.mode(service)
+np.median(service)
+
+3.)
+x=[ 0, 1, 2, 3, 4, 5]
+p = [0.09, 0.15, 0.40, 0.25, 0.10, 0.01]
+mean = 0
+for i in range(len(x)):
+    mean = mean + x[i]*p[i]
+print(mean)
+var=0
+for i in range(len(x)):
+    var = var + ((x[i]-mean)**2)*p[i]
+print (var)
+
+4.)
+from scipy import integrate
+#PDF (𝑑) = 20𝑒−20(𝑑−12.5)
+#𝑑 ≥ 12.5
+PDF=lambda d:20*(np.exp((-20*(d-12.5))))
+x = 12.6
+P_x=integrate.quad(PDF,12.6,np.inf)
+y = 11
+CDF=integrate.quad(PDF,-np.inf,y)
+print(f"Proportion of Parts need to scrapped when d >12.6mm is :{P_x[0]}")
+print(f"CDF when d= 11mm is:{CDF[0]}")
+print(f"Proportion of CDF when d>12.5mm is : {integrate.quad(PDF,12.5,np.inf)[0]}")
+
+5.)
+from scipy.stats import binom
+import math
+probability=binom.pmf(k=2,n=6,p=0.3)
+mean,var=binom.stats(n=6,p=0.3)
+print("Average value of the process,(n*p)= ",mean)
+print("Standard Deviation,(sqrt(n*p*(1-p))) =",math.sqrt(var))
+
+6.)
+import scipy
+import matplotlib.pyplot as plt
+%matplotlib inline
+#probability that each of them will solve 5 questions correctly
+Probability_that_gaurav_will_solve_5_questions_correctly=scipy.stats.binom.pmf(k=5, n=8, p=0.75)
+Probability_that_Barakha_will_solve_5_questions_correctly=scipy.stats.binom.pmf(k=5, n=12, p=0.45)
+
+#probability that each of them will solve 4 and 6 questions correctly:
+#probability that gaurav will solve 4 and 6 questions correctly
+Probability_that_gaurav_will_solve_4_questions_correctly=scipy.stats.binom.pmf(k=4, n=8, p=0.75)
+Probability_that_gaurav_will_solve_6_questions_correctly=scipy.stats.binom.pmf(k=6, n=8, p=0.75)
+#probability that Barakha will solve 4 and 6 questions correctly
+Probability_that_Barakha_will_solve_4_questions_correctly=scipy.stats.binom.pmf(k=4, n=12, p=0.45)
+Probability_that_Barakha_will_solve_6_questions_correctly=scipy.stats.binom.pmf(k=6, n=12, p=0.45)
+print("Probability_that_gaurav_will_solve_5_questions_correctly :",Probability_that_gaurav_will_solve_5_questions_correctly)
+print("Probability_that_Barakha_will_solve_5_questions_correctly :",Probability_that_Barakha_will_solve_5_questions_correctly)
+print("Probability_that_gaurav_will_solve_4_questions_correctly :",Probability_that_gaurav_will_solve_4_questions_correctly)
+print("Probability_that_gaurav_will_solve_6_questions_correctly :",Probability_that_gaurav_will_solve_6_questions_correctly)
+print("Probability_that_Barakha_will_solve_4_questions_correctly :",Probability_that_Barakha_will_solve_4_questions_correctly)
+print("Probability_that_Barakha_will_solve_6_questions_correctly :",Probability_that_Barakha_will_solve_6_questions_correctly)
+
+#Let n1 questions are attempted by gaurav
+#Let n2 questions are attempted by Barakha
+n1=8
+n2=12
+p1=0.75
+p2=0.45
+x1=list(range(n1+1))
+x2=list(range(n2+1))
+l1=[binom.pmf(i,n1,p1) for i in x1]
+l2=[binom.pmf(i,n2,p2) for i in x2]
+fig,axes=plt.subplots(1,2,figsize=(15,8))
+axes[0].bar(x1,l1)
+axes[0].set_title("Gaurav's Binomial Distribution")
+axes[1].bar(x2,l2)
+axes[1].set_title("Barakha's Binomial Distribution")
+plt.show()
+
+7.)
+
+import seaborn as sns
+lam=(72/60)*4
+poi=np.random.poisson(lam,1000)
+#Probability of 5 customers arriving in 4 minutes,
+prob_5=np.sum(poi==5)/1000
+#Probability of not more than 3 customers arriving in 4 minutes,
+prob_not_more_than3=np.sum(poi<=3)/1000
+#Probability of more than 3 customers arriving in 4 minutes,
+prob_more_than3=np.sum(poi>3)/1000
+print("Probablity of 5 customers arriving in 4 minutes :",prob_5)
+print("Probablity of not more than 3 customers arriving in 4 minutes :",prob_not_more_than3)
+print("Probablity of more than 3 customers arriving in 4 minutes :",prob_more_than3)
+sns.distplot(poi,hist=False)
+
+8.)
+
+#given an efficiency of entering 77 words per minute with 6 errors per hour
+S77_words_per_minute=77*60 #words_per_hour
+six_errors_per_hour=6/4620 #errors_per_words
+#probability that i will commit 2 errors in 455 word financial report
+r=2
+lam=six_errors_per_hour*455
+poi=np.random.poisson(lam,1000)
+prob_2=np.sum(poi==2)/1000
+print("probability that I will commit 2 errors in a 455-word financial report :",prob_2)
+sns.distplot(poi,hist=False)
+
+10.)
+#p(Z>1.26)
+#p(Z>1.26)=1-p(Z<=1.26)
+print("From Z-table we get the value of p(Z<=1.26) as 0.8962,therfore p(Z>1.26) is :",1-0.8962)
+#p(Z<-0.86)
+print("From Z-table we get p(Z<-0.86) as : 0.1949")
+#p(Z>−1.37)
+#p(Z>-1.37)=p(Z<1.37)
+print("From Z-table we get p(Z>-1.37)=>p(Z<1.37) as : 0.9147")
+#p(−1.25<Z<0.37)
+#p(−1.25<Z<0.37)=>p(Z<-1.25) and p(Z<0.37) 
+print("From Z-table we get p(Z<-1.25) as 0.1056 and p(z<0.37) as 0.6443 ,therefore we get p(−1.25<Z<0.37) as :",0.6443-0.1056)
+#p(Z≤−4.6)
+print("From z-table we get p(z<=4.6) as : 0.0000")
+
+#Find the value z such that P(Z>z)=0.05
+print("From z-table we get the value z when p(Z>z)=0.05 as 1.64")
+
+#Find the value of z such that P(−z<Z<z)=0.99
+print("since Total-probablity=1 ,then 1-0.99=0.01  ,by diving with 2 we get 0.005")
+print("From z-table we get z-value when p(-z<Z<z)=0.99 as : 2.57")
+
+11.)
+#given mean=10
+#given variance=4 so standard_deviation=2
+mean=10
+std=2
+z=(x-mean)/std
+#probability hat a current measurement will exceed 13 mA is given by p(x>13)
+print("probability hat a current measurement will exceed 13 mA,p(x>13),")
+print("p(x>13)=>p(z>1.5)")
+print("       =>1-p(z<=1.5)")
+print("From z-table we get p(z<=1.5) as 0.9332,therefore p(z>1.5) as :",1-0.9332)
+print("                  ")
+
+#probability that a current measurement is between 9 and 11mA
+print("probability that a current measurement is between 9 and 11mA,p(9<x<11),")
+print("p(9<x<13)=>p(-0.5<z<0.5)")
+print("         =>p(z<0.5)-p(z<-0.5)")
+print("From z-table we get p(z<0.5) as 0.6915 and p(z<-0.5) as 0.3085")
+print("Therefore we get p(-0.5<z<0.5) =",0.6915-0.3085)
+print("                 ")
+
+#The current measurement which has a probability of 0.98
+#we are asked z when p(Z<z)=0.98
+print("The current measurement which has a probability of 0.98 ,")
+print("From the z-table,we get z value when p(Z<z)=0.98 as 2.06")
+
+12.)
+
+#given mean=0.2508
+#standard_deviation=0.0005
+mean=0.2508
+std=0.0005
+z=(x-mean)/std
+#given specifications are 0.2500+-0.0015
+#p(0.2485<x<0.2515)=>p(((0.2485-0.2508)/0.0005)<Z<((0.2515-0.2508)/0.0005))
+                  #=>p(-4.6<Z<1.4)=>p(z<1.4)-p(z<-4.6)
+print("we have to find the value of p(0.2485<x<0.2515) ")
+print("p(0.2485<x<0.2515)=>p(((0.2485-0.2508)/0.0005)<Z<((0.2515-0.2508)/0.0005)")
+print("                  =>p(-4.6<Z<1.4)=>p(z<1.4)-p(z<-4.6)")
+print("From z-table we get p(z<1.4) as 0.9192 and p(z<-4.6) as 0.0000 ,so therefore we get the value of p(-4.6<Z<1.4) as ",0.9192-0.0000)
+print("From above ,we conclude that 92% of shafts to the new specifications.")
