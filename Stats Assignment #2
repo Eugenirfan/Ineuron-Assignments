@@ -1,0 +1,526 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[46]:
+
+
+import pandas as pd
+import numpy as np
+from scipy import stats as st
+from scipy import stats
+import pandas as pd 
+import numpy as np
+import math
+
+
+# In[47]:
+
+
+def z_stat(samp_mean,pop_mean,se):
+    return (samp_mean-pop_mean)/se
+def t_stat(samp_mean,pop_mean,se):
+    return (samp_mean-pop_mean)/se
+def sample_error(std,n):
+    return std/(np.sqrt(n))
+
+
+# In[48]:
+
+
+#1.)
+"""1.Yes, because values in both are statement about population or distribution, have equal values and has inequality in ull hypothesis. 2.No, because null hypothesis has an eqaulity claim and alternate hypothesis has inequality. 3.No, because hypothesis is stated in terms of statistics and not sample data 4. No, because values in both hypothesis is different and has equal sign. 4.No, because hypothesis are always statements about population or distribution and not about sample"""
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[50]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[52]:
+
+
+#2.)
+import numpy as np
+#from statsmodels.stats.weightstats import ztest
+from scipy.stats import *
+
+
+# Population Mean is 'mu' and standard deviation is 'sd'
+mu = 52
+sd = 4.5
+# Sample mean is 'x', 'n' is sample size.
+n = 100
+x = 52.8
+# Finding Sample Standard Deviation According to Central Limit Theorem
+s = sd/(n**.5) # Standard Error
+
+#sample = s * np.random.randn(n) + x
+
+# Null Hypothesis (H0): mu = 52
+# Alternate Hypothesis (H1): mu > 52
+
+# Significance Level
+alpha = 0.05
+
+# Decision Rule: As alternative claim is greater than the average.
+# So its a Right tailed test.
+z_alpha = norm.ppf(1 - alpha)#, loc=x, scale=s)
+print(f'Z alpha Score: {z_alpha}')
+
+# Test Stats
+#z, p = ztest(sample, value=mu, alternative='larger')
+z = (x - mu) / s
+p = norm.sf(z)
+print(f'Z test Score: {z}\nP value: {p}')
+print(f'std is {s}')
+
+# Results
+if p < alpha:
+    print("Reject Null Hypothesis")
+    print("Average cost is higher than the bookstore's claim")
+else:
+    print("Accept Null Hypothesis")
+    print("Average cost that the bookstore claims is correct")
+
+
+# In[ ]:
+
+
+
+
+
+# In[53]:
+
+
+#3.)
+# Population Mean is 'mu' and standard deviation is 's'
+mu = 34
+sd = 8
+# Sample mean is 'x', 'n' is sample size.
+n = 50
+x = 32.5
+# Finding Sample Standard Deviation According to Central Limit Theorem
+s = sd/(n**.5) # Standard Error
+
+#sample = s * np.random.randn(n) + x
+
+# Null Hypothesis (H0): mu = 34
+# Alternate Hypothesis (H1): mu < 34
+
+# Significance Level
+alpha = 0.01
+
+# Decision Rule: The average discharge of chemical pollutant has been  lowered.
+# So its a Left tailed test.
+z_alpha = norm.ppf(alpha)
+print(f'Z alpha Score: {z_alpha}')
+
+# Test Stats
+#z, p = ztest(sample, value=x, alternative='smaller')
+z = (x - mu) / s
+p = norm.sf(z)
+print(f'Z test Score: {z}\nP value: {p}')
+
+# Results
+if p < alpha:
+    print("Reject Null Hypothesis")
+    print("The average pollutant infusion into the river has been reduced")
+else:
+    print("Accept Null Hypothesis")
+    print("The average pollutant infusion into the river did not reduce")
+
+
+# In[ ]:
+
+
+
+
+
+# In[54]:
+
+
+#4.)
+# Since the sample size<30 and population variance is not known and the sample is derived from a normal population we use t-test
+alpha=0.5
+samp_data=np.array([1008,812,1117,1323,1308,1415,831,1021,1287,851,930,730,699,872,913,944,954,987,1695,995,1003,994])
+samp_mean=np.mean(samp_data)
+samp_std=np.std(samp_data)
+t=t_stat(pop_mean=1135,samp_mean=samp_mean,se=sample_error(samp_std,len(samp_data)))
+print(p)
+print(alpha)
+print(t)
+p=2*(1-st.t.cdf(x=np.absolute(t),df=21))
+if p<alpha:
+    print("Null Hypothesis is rejected, 𝜇!=$1135")
+else:
+    print("Null Hypothesis is accepted,  𝜇=$1135")
+
+
+# In[ ]:
+
+
+
+
+
+# In[55]:
+
+
+#5.
+#Since the sample size>30 and the normality of the sample is not known we can use z-test
+alpha=0.05
+z=z_stat(pop_mean=48432,samp_mean=48574,se=sample_error(2000,400))
+p=2*(1-st.norm.cdf(x=np.absolute(z)))
+if p<alpha:
+    print("Null Hypothesis is rejected(Average family income of metropolis is not $48432)")
+else:
+    print("Null Hypothesis is accepted(Average family income of metropolis is $48432)")
+
+
+# In[ ]:
+
+
+
+
+
+# In[56]:
+
+
+#6.)
+#Since the sample size <30 and population std is not known we use t-test
+alpha=0.05
+t=t_stat(pop_mean=32.28,samp_mean=31.67,se=sample_error(std=1.29,n=19))
+p=2*(1-st.t.cdf(df=18,x=np.absolute(t)))
+if p<alpha:
+    print("Null Hypothesis is rejected(𝜇!=$32.28)")
+else:
+    print("Null Hypothesis is accepted(𝜇=$32.28)")
+
+
+# In[ ]:
+
+
+
+
+
+# In[57]:
+
+
+#8)
+print("t-score is :",t_stat(pop_mean=10,samp_mean=12,se=sample_error(std=1.5,n=16)))
+
+
+# In[58]:
+
+
+#9)
+print("The t-score below which we can expect 99% of sample means will fall is : ",st.t.ppf(q=0.99,df=15))
+
+
+# In[ ]:
+
+
+
+
+
+# In[59]:
+
+
+#10)
+print("The t-score where we can expect to find the middle 95%of all sample means is :",st.t.ppf(q=0.95,df=24))
+print("P(−𝑡0.05 <𝑡<𝑡0.10) = ",1-0.05-0.10)
+
+
+# In[ ]:
+
+
+
+
+
+# In[60]:
+
+
+#11)
+# Since the sample sizes are larger we use z-test for checking the equality of population means
+def z_stat_twomeans(x1,x2,se):
+    return (x1-x2)/se
+def sample_error_twomeans(s1,n1,s2,n2):
+    return (np.sqrt((s1**2/n1)+(s2**2/n2)))
+alpha=0.05
+z=z_stat_twomeans(x1=452,x2=523,se=sample_error_twomeans(s1=212,n1=1200,s2=185,n2=800))
+p=2*(1-st.norm.cdf(x=np.absolute(z)))
+if p<alpha:
+    print("Null Hypothesis is rejected(number of people travelling from Bangalore to Chennai is different from the number of people travelling from Bangalore to Hosur in a week(𝜇1!=𝜇2)")
+else:
+    print('Null Hypothesis is accepted(number of people travelling from Bangalore to Chennai is same as  from the number of people travelling from Bangalore to Hosur in a week(𝜇1=𝜇2))')
+
+
+# In[ ]:
+
+
+
+
+
+# In[61]:
+
+
+#12)
+# Since the sample sizes are larger we use z-test for checking the equality of population means
+alpha=0.05
+z=z_stat_twomeans(x1=308,x2=254,se=sample_error_twomeans(s1=84,n1=100,s2=67,n2=100))
+p=2*(1-st.norm.cdf(x=np.absolute(z)))
+if p<alpha:
+    print("Null Hypothesis is rejected(there is evidence to conclude that the number of people preferring Duracell battery is different from the number of people preferring Energizer battery (𝜇1!=𝜇2))")
+else:
+    print("Null Hypothesis is accepted(there is evidence to conclude that the number of people preferring Duracell battery is same as from the number o")
+
+
+# In[ ]:
+
+
+
+
+
+# In[62]:
+
+
+#13)
+#Sample sizes are small and the population variance is unknown we use t-test for equality of means and estimate the population variance
+alpha=0.05
+def est_std(n1,s1,n2,s2):
+    return np.sqrt(((n1*s1**2)+(n2*s2**2))/(n1+n2-2))
+est_standard_dev=est_std(n1=14,s1=0.12,n2=9,s2=0.11)
+t=z_stat_twomeans(x1=0.317,x2=0.21,se=sample_error_twomeans(s1=est_standard_dev,s2=est_standard_dev,n1=14,n2=9))
+p=2*(1-st.t.cdf(x=np.absolute(t),df=14+9-2))
+if p<alpha:
+    print("Null Hypothesis is rejected(Average percentage increase in the price of sugar differs when it is sold at two different prices.)")
+else:
+    print("Null Hypothesis is accepted(Average percentage increase in the price of sugar is same when it is sold at two different prices.)")
+
+
+# In[ ]:
+
+
+
+
+
+# In[63]:
+
+
+#14)
+alpha=0.05
+est_stand_dev=est_std(n1=15,s1=844,n2=12,s2=669)
+t=z_stat_twomeans(x1=6870,x2=6598,se=sample_error_twomeans(s1=est_stand_dev,s2=est_stand_dev,n1=15,n2=12))
+p=1-(st.t.cdf(x=t,df=15+12-1))
+if p<alpha:
+    print("Null Hypothesis is rejected(Average Sales after reduction increased)")
+else: 
+    print("Null Hypothesis is accepted(Average Sales before and after reduction is same or less)")
+
+
+# In[ ]:
+
+
+
+
+
+# In[64]:
+
+
+#15)
+def z_test_pop_proportions(p1,p2,se):
+    return ((p1-p2)/se)
+def sample_error_pop_proportions(p1,p2,n1,n2):
+    return np.sqrt(((p1*(1-p1))/n1)+((p2*(1-p2))/n2))
+alpha=0.05
+p1=53/1000
+p2=43/100
+z=z_test_pop_proportions(p1=p1,p2=p2,se=sample_error_pop_proportions(p1=p1,p2=p2,n1=1000,n2=100))
+p=2*(1-st.norm.cdf(x=np.absolute(z)))
+if p<alpha:
+    print("Null Hypothesis is rejected(Banks share of the car loan market in 1980 and 1995 is not equal(P1!=P2))")
+else:
+    print("Null Hypothesis is accepted(Banks share of the car loan market in 1980 and 1995 is equal(P1=P2))")
+
+
+# In[65]:
+
+
+#16)
+alpha=0.05
+se=sample_error_pop_proportions(p1=0.4,p2=0.2,n1=300,n2=140)
+z=((0.4-0.2-0.1)/se)
+p=st.norm.cdf(z)
+if p<alpha:
+    print("Null Hypothesis is rejected")
+else:
+    print("Null Hypothesis is accepted(the population proportion of traveler’s check buyers who buy at least $2500 in checks when sweepstakes prizes are offered as at least 10% higher than the proportion of such buyers when no sweepstakes are on)")
+
+
+# In[66]:
+
+
+#17)
+observed=np.array([16,20,25,14,29,28])
+expected=np.array([22,22,22,22,22,22])
+chi,p=st.chisquare(f_obs=observed,f_exp=expected)
+if p<0.05:
+    print("Null Hypothesis is rejected(Dice is biased)")
+else:
+    print("Null Hypothesis is accepted(Dice is unbiased)")
+
+
+# In[ ]:
+
+
+
+
+
+# In[67]:
+
+
+#18)
+#We use a chi-square test with the help of the above contingency table and calculate the chi-square variate 
+alpha=0.05
+inp=np.array([[2792,3591],[1486,2131]])
+chi2,p,dof,expected=st.chi2_contingency(inp)
+print("The expected values are :",expected)
+if p<alpha:
+    print("Null Hypothesis is rejected(Gender and voting are dependent)")
+else:
+    print("Null Hypothesis is accepted(Gender and voting is independent)")
+
+
+# In[ ]:
+
+
+
+
+
+# In[68]:
+
+
+#19)
+alpha=0.05
+obs=[41,19,24,16]
+exp=[25,25,25,25]
+chi,p=st.chisquare(f_obs=obs,f_exp=exp)
+if p<alpha:
+    print("Null Hypothesis is rejected(All candidates are not equally popular)")
+else:
+    print("Null Hypothesis is accepted(All candidates are equally popular)")
+
+
+# In[ ]:
+
+
+
+
+
+# In[69]:
+
+
+#20)
+alpha=0.05
+inp=np.array([[18,22,20],[2,28,40],[20,10,40]])
+chi2,p,dof,expected=st.chi2_contingency(inp)
+if p<alpha:
+    print("Null Hypothesis is rejected(There is a significant relationship between age and photograph preference. )")
+else:
+    print("Null Hypothesis is accepted(There is no significant relationship between age and photograph preference.)")
+
+
+# In[ ]:
+
+
+
+
+
+# In[70]:
+
+
+#21)
+alpha=0.05
+inp=np.array([[18,40],[32,10]])
+chi2,p,dof,expected=st.chi2_contingency(inp)
+if p<alpha:
+    print("Null Hypothesis is rejected(There is a significant difference between the support and no support conditions in the frequency with which individuals are likely to conform.)")
+else:
+    print("Null Hypothesis is accepted(There is no significant difference between the support and no support conditions in the frequency with which individual")
+
+
+# In[ ]:
+
+
+
+
+
+# In[71]:
+
+
+#22)
+df=pd.DataFrame([[12,32],[22,14],[9,6]],columns=['Short','Tall'],index=['Leader','Follower','Unclassifiable'])
+df
+
+
+# In[72]:
+
+
+alpha=0.01
+inp=np.array([[12,32],[22,14],[9,6]])
+chi2,p,dof,expected=st.chi2_contingency(inp)
+if p<alpha:
+    print("Null Hypothesis is rejected(There is a relationship between height and leadership qualities.)")
+else:
+    print("Null Hypothesis is accepted(There is no relationship between height and leadership qualities.)")
+
+
+# In[73]:
+
+
+df=pd.DataFrame([[679,103,114],[63,10,20],[42,18,25]],columns=['Married','Widowed,Divorced or seperated','Never Married'],index=['Employed','Unemployed','Not in labor force'])
+df
+
+
+# In[74]:
+
+
+#23)
+alpha=0.05
+inp=np.array([[679,103,114],[63,10,20],[42,18,25]])
+chi2,p,dof,expected=st.chi2_contingency(inp)
+if p<alpha:
+    print("Null Hypothesis is rejected(Marital status and employement status are dependent.)")
+else:
+    print("Null Hypothesis is accepted(Marital status and employement status are independent.)")
+
+
+# In[ ]:
+
+
+
+
