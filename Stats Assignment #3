@@ -1,0 +1,49 @@
+1.)
+
+μ =100 # mean of population
+X= 108 # mean of sample for 36 samples
+σ= 15 # standard deviation  of population
+N = 36 # No. Of Samples 
+
+
+# Import python modules 
+
+import math   # math module for mathematical calculation
+
+import scipy.stats as stats # stats module for statistical calculation
+
+Z = (X - μ) / ((σ) /math.sqrt(N))
+print(" Z-Score value is :",Z)
+
+# calcultion of standard normal probabilities based upon " Z - Score"
+
+p = stats.norm.cdf(Z)  # cdf function takes Z- score , based upon which return the standard normal probality
+print("The probability of having mean less than 108 ( mean as per sample) is ",round(p,4))
+#Null hypothesis rejected
+
+2.)
+
+Let P1 = the proportion of Republican voters in the first state, P2 = the proportion of Republican voters in the second state, p1 = the proportion of Republican voters in the sample from the first state, and p2 = the proportion of Republican voters in the sample from the second state. The number of voters sampled from the first state (n1) = 100, and the number of voters sampled from the second state (n2) = 100.
+
+The mean of the difference in sample proportions: E(p1 - p2) = P1 - P2 = 0.52 - 0.47 = 0.05.
+
+The standard deviation of the difference : np.sqrt((p1 (1 - p1) / n1) + (p2 (1 - p2) / n2)) = 0.0706
+
+Hypothesis : H0 : p1 - p2 <= 0 H1 : p1 - p2 > 0
+
+z_statistic = (0 - 0.05) / 0.0706
+
+p_value for this z_statistic = 0.24
+
+Therefore, the probability that the survey will show a greater percentage of Republican voters in the second state than in the first state is 0.24.
+
+3.)
+
+my_score = 1100
+mean_score = 1026
+std_deviation = 209
+
+z_score = (my_score - mean_score) / std_deviation
+
+#z_score is coming out to be : 0.354 That means my score is (0.354 * std_deviation) away from the mean in +ve direction
+
