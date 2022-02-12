@@ -1,0 +1,105 @@
+1.)
+
+# level of  significance (given in problem)
+alpha= 0.05
+
+df=3  #degree of freedom
+
+sample_size =395 # sample size given in problem
+
+
+list_Female=[60,54,46,41,201]  # temporary list for row of female
+list_Male=[40,44,53,57,194]     # temporary list for row of male
+list_Total=[100,98,99,98,395]    # temporary list for row of Total
+
+
+comulative_list= list(zip(list_Female,list_Male,list_Total))  # zip function to map the idividual list at their index level
+comulative_list
+
+# transform the list into a pndas data farme 
+import pandas as pd # pandas module import
+df_table = pd.DataFrame(comulative_list).T  # " .T " to transpose the data frame or convert columns into rows
+df_table
+
+df_table.rename(columns={0:'High School',1:'Bachelors',2:'Masters',3:'Ph.d.',4:'Total'},index={0:'Female',1:'Male',2:'Total'} , inplace=True  )
+df_table
+
+# calculate Observation data 
+
+chi_observation= df_table.iloc[0:2,0:4]   # Slice the data frame to get data except "Total" from row and column, " iloc" to get data from position number
+chi_observation  # Observed data
+
+df_table_row=df_table["Total"][0:3]  # Slice the data frame to get data "Total" from row 
+df_table_col=df_table.loc["Total"][0:5]  # Slice the data frame to get data "Total" from column
+
+print("Total's row data\n",df_table_row)
+print("\nTotal's column data\n",df_table_col)
+import numpy as np # numpy for mathematical calculation
+
+sample_size=395 # given in problem
+
+chi_expected= (np.outer(df_table_row ,df_table_col))/sample_size  # np.outer () for cross multiplication of two same/differencet size of series/array
+chi_expected
+
+# Convert expected data into data frame and assign column and row-index
+
+chi_expected = pd.DataFrame(chi_expected) 
+
+chi_expected.rename(columns={0:'High School',1:'Bachelors',2:'Masters',3:'Ph.d.',4:'Total'},index={0:'Female',1:'Male',2:'Total'}, inplace= True )
+
+chi_expected  # Expected data
+
+# Calculate chi- square stistics value
+
+chi_squared_statistics=(((chi_observation-chi_expected)**2)/chi_expected).sum().sum() # Sum() has been applied twice once to get the column sums and a second time to add the column sums together, returning the sum of the entire 2D table
+print(" Chi-Square Test Statstic value :", chi_squared_statistics )
+
+# Calculate p-vale (probability) for Test statistics value
+
+import scipy.stats as stats
+
+df # df= degre of freedom , 3 for this problem, calcualtion has been done above.
+
+p_value = 1 - stats.chi2.cdf(chi_squared_statistics,df)    #  stats.chi2.cdf is comulative density function which defines mass of probability of the function up to a given point; what percentage of the distribution lies on one side of this point. 
+print("Chi-square P value")
+print(p_value)
+#Calculate chi-square crtical value
+alpha =0.05  # significance level , given in problem hence confidence level is 95 %
+
+
+chi_squared_statistics_critical= stats.chi2.ppf(0.95,df)
+print("Output:")
+print(" Chi-Square Test Critical value :", chi_squared_statistics_critical )
+#Reject Null Hypothesis
+#Since 8.006 > 7.815, therefore we reject the null hypothesis (Ho) and conclude that the education level depends on gender at a 5% level of significance.
+
+2.)
+
+import scipy.stats as stats
+Group1=[51, 45, 33, 45, 67]
+Group2=[23, 43, 23, 43, 45]
+Group3=[56, 76, 74, 87, 56]
+statistic,pvalue=stats.f_oneway(Group1,Group2,Group3)
+print("F-value :",statistic," and  pvalue :",pvalue)
+alpha=0.05
+#given alpha=0.05
+#so if pvalue is less than alpha value it is critical region,so we have to reject null hypothesis
+if pvalue<alpha:
+    print('True beacause pvalue returned is less than 0.05')
+else:
+    print('False')
+print("After performing anova test we came to know that groups have different sample means since pvalue is significant at 99% confidence interval.")
+
+
+3.)
+
+import numpy as np
+data_setA=np.array([10, 20, 30, 40, 50])
+data_setB=np.array([5,10,15, 20, 25])
+degree_of_freedomA=data_setA.size-1
+degree_of_freedomB=data_setB.size-1
+VarianceA=np.var(data_setA)
+VarianceB=np.var(data_setB)
+f_value=VarianceA/VarianceB
+print("F Test for given 10, 20, 30, 40, 50 and 5,10,15, 20, 25 :",f_value)
+
